@@ -1,51 +1,48 @@
 import React from "react";
 import "./menu_style.css";
 import { Link, useNavigate } from "react-router-dom";
-import { MdChat } from 'react-icons/md';
+import { MdChat, MdPlace, MdHandshake } from 'react-icons/md';
 import logoPath from "../images/GUIDO_logo.svg";
-import { MdPlace } from 'react-icons/md';
 
-function addClassActive(id, nomeClasseMainContent) {
-  let attualmenteSelezionato = document.querySelectorAll(".voceMenuActive");
-
-  [].forEach.call(attualmenteSelezionato, function (el) {
-    el.classList.remove("voceMenuActive");
-  });
-
+function addClassActive(id) {
+  const attualmenteSelezionato = document.querySelectorAll(".voceMenuActive");
+  attualmenteSelezionato.forEach(el => el.classList.remove("voceMenuActive"));
   document.getElementById(id).classList.add("voceMenuActive");
 }
 
 function Menu() {
-  let nav = useNavigate();
+  const nav = useNavigate();
 
   return (
-    <div className="contenitoreMenu">
-      { <img src={logoPath} className="logoMenu" /> }
+    <div className="contenitoreMenu shadow">
+      <div className="logoContainer">
+        <img src={logoPath} alt="GUiDO Logo" className="logoMenu" />
+      </div>
 
-      <div className="contenitoreVociMenu">
-        <Link
-          to={"/"}
-          className="voceMenuText"
-          onClick={() => addClassActive(2, "contenitoreMainContent")}
-        >
+      <nav className="contenitoreVociMenu">
+        <Link to={"/"} className="voceMenuText" onClick={() => addClassActive(2)}>
           <div className="voceMenu voceMenuActive" id="2">
-                <MdPlace className="iconaMenu"/>
+            <MdPlace className="iconaMenu" />
             <span>Culture Inspector</span>
           </div>
         </Link>
 
-        <Link
-          to={"/chatbot"}
-          className="voceMenuText"
-          onClick={() => addClassActive(1, "contenitoreMainContent")}
-        >
+        <Link to={"/chatbot"} className="voceMenuText" onClick={() => addClassActive(1)}>
           <div className="voceMenu" id="1">
-            <MdChat className="iconaMenu"/>
+            <MdChat className="iconaMenu" />
             <span>Chatbot</span>
           </div>
         </Link>
-      </div>
+
+        <Link to={"/community-inspector"} className="voceMenuText" onClick={() => addClassActive(3)}>
+          <div className="voceMenu" id="3">
+            <MdHandshake className="iconaMenu" />
+            <span>Community Inspector</span>
+          </div>
+        </Link>
+      </nav>
     </div>
   );
 }
+
 export default Menu;

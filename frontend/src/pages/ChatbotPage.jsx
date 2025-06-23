@@ -108,7 +108,7 @@ const ChatbotPage = () => {
   };
 
   return (
-    <div className="chatbot-page">
+    <div className="chatbot-page page">
       <div className='chatbot-header'>
         <img className="chatbot-logo" src={logoPath} alt='Avatar' />
         <div className='chatbot-name'>CADOCS</div>

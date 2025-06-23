@@ -15,12 +15,19 @@ import {
 import CountrySelector from './pages/CountrySelector';
 import ChatbotPage from './pages/ChatbotPage';
 import menu from "./components/menu";
+import CommunityInspector from './pages/CommunityInspector';
+import CommunityRequests from './pages/community-inspector/CommunityRequests';
+import CommunityInsertRequest from './pages/community-inspector/CommunityInsertRequest';
 
 const AppRoutes = () =>{
     return (
         <Routes>
             <Route path="/" element={<AppShell> <Menu/> <CountrySelector/> </AppShell> }/>
             <Route path="/chatbot" element={<AppShell> <Menu/><ChatbotPage/> </AppShell>}/>
+            <Route path="/community-inspector" element={<AppShell> <Menu/><CommunityInspector/> </AppShell>}/>
+            <Route path="/community-requests" element={<AppShell> <Menu/><CommunityRequests/> </AppShell>}/>
+            <Route path="/community-insert-requests" element={<AppShell> <Menu/><CommunityInsertRequest/> </AppShell>}/>
+
         </Routes>
     )
 }

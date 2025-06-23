@@ -159,7 +159,7 @@ const CountrySelector = () => {
     }
   };
   return (
-    <div className="country-selector-page">
+    <div className="country-selector-page page">
       <div className="header-country">
         <h2>Country Selector</h2>
       </div>

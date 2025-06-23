@@ -1,0 +1,22 @@
+.menu-inspect {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 40px;
+    padding-inline: 20%;
+
+    .voceMenu {
+        width: auto !important;
+    }
+
+    .voceMenuText  {
+        width: auto !important;
+    }
+}
+
+.floating-back {
+    position: absolute;
+    z-index: 10;
+    top: 30px;
+    left: 310px;
+}
