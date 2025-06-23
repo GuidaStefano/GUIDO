@@ -12,3 +12,4 @@ ambiente
 __pycache__/
 toolGui.spec
 build/
+node_modules/
