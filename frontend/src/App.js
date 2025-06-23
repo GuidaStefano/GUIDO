@@ -18,6 +18,7 @@ import menu from "./components/menu";
 import CommunityInspector from './pages/CommunityInspector';
 import CommunityRequests from './pages/community-inspector/CommunityRequests';
 import CommunityInsertRequest from './pages/community-inspector/CommunityInsertRequest';
+import RequestDetail from './pages/community-inspector/RequestDetail';
 
 const AppRoutes = () =>{
     return (
@@ -27,7 +28,7 @@ const AppRoutes = () =>{
             <Route path="/community-inspector" element={<AppShell> <Menu/><CommunityInspector/> </AppShell>}/>
             <Route path="/community-requests" element={<AppShell> <Menu/><CommunityRequests/> </AppShell>}/>
             <Route path="/community-insert-requests" element={<AppShell> <Menu/><CommunityInsertRequest/> </AppShell>}/>
-
+            <Route path="/request-detail" element={<AppShell> <Menu/><RequestDetail/> </AppShell>}/>
         </Routes>
     )
 }

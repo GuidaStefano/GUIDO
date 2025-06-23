@@ -18,7 +18,7 @@ const CommunityGraph = () => {
  
 
   return (
-    <div style={{ width: '98%', height: '100%', maxHeight: "85vh" }}>
+    <div style={{ height: '100%', maxHeight: "85vh" }}>
       <ForceGraph3D
         ref={fgRef}
         graphData={graphData}

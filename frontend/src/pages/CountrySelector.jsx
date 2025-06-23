@@ -197,7 +197,7 @@ const CountrySelector = () => {
             ))}
           </div>
         )}
-        <button className="reset-button" onClick={resetPage}>Reset</button>
+        <button className="btn-primary" onClick={resetPage}>Reset</button>
       </div>
 
       {isModalVisible && (
@@ -253,7 +253,7 @@ const CountrySelector = () => {
       </div>
 
       <div className="center-button-container">
-        <button className="compute-button" onClick={sendRequest}
+        <button className="btn-primary" onClick={sendRequest}
                 disabled={!selectedOptionMap.size || geoDistribution === null}>Compute
         </button>
       </div>

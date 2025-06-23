@@ -138,7 +138,7 @@ const ChatbotPage = () => {
           onKeyPress={handleKeyPress} // Aggiungi gestore di eventi
           placeholder="Scrivi un messaggio..."
         />
-        <button onClick={handleSendMessage}>Invia</button>
+        <button className='btn-primary' onClick={handleSendMessage}>Send</button>
       </div>
     </div>
   );

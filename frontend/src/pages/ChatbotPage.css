@@ -54,17 +54,12 @@
   }
   
   .user-input button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #00979B;
-    color: white;
-    cursor: pointer;
+    height: max-content;
+    height: 50px;
+    margin: 0;
   }
   
-  .user-input button:hover {
-    background-color: #0056b3;
-  }
+  
 
 .chatbot-header {
   display: flex;

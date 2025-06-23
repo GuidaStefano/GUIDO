@@ -7,6 +7,7 @@
     height: auto;
     gap: 1vh;
     position: fixed;
+    z-index: 2;
 }
 
 .contenitoreLogoMenu {

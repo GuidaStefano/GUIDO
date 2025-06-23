@@ -20,3 +20,106 @@
     top: 30px;
     left: 310px;
 }
+
+.form-request {
+    width: 42%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 40px;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+
+    input {
+        border-radius: 5px;
+        width: 300px;
+        height: 40px;
+        padding-inline: 5px;
+        font-size: large;
+    }
+}
+
+.horizontal-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+
+    button {
+        width: 95px;
+        font-size: medium;
+    }
+} 
+
+.div-input {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    -webkit-box-shadow: 2px 2px 14px -1px rgba(0, 0, 0, 0.56);
+    padding: 35px;
+    border-radius: 5px;
+}
+
+.input-div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.vertical-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+
+    button {
+        margin: 0;
+    }
+}
+
+.modal-dialog {
+    top: 50px;
+}
+
+.vertical-div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 16px;
+    padding: 10px;
+    margin-top: 40px;
+    .voceMenu {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        padding: 30px;
+        text-decoration: none;
+        color: black;
+        height: 300px;
+        width: 300;
+        justify-content: center;
+        align-items: center;
+        font-size: medium;
+        font-weight: 600;
+    }
+}
+
+.flex-col {
+    justify-content: center;
+    gap: 40px;
+
+    div {
+        text-align: center;
+        color: #00979B;
+        margin-top: 20px;
+
+        label {
+            color: black;
+        }
+
+        svg {
+            color: #00979B;
+            fill: #00979B;
+        }
+    }
+}

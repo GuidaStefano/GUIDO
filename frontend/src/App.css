@@ -33,6 +33,7 @@ body {
 .page {
   margin-left: 21%;
   max-width: calc(100% - 21%);
+  padding-bottom: 60px;
 }
 
 .content-wrapper {
@@ -43,4 +44,8 @@ body {
   .geographical-question {
     width: 80%;
   }
+}
+
+h2 {
+  color: var(--primary-color) !important; 
 }
