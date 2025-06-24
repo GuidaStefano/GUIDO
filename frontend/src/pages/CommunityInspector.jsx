@@ -25,7 +25,7 @@ const CommunityInspector = () => {
           <Link to={"/community-requests"} className="voceMenuText">
               <div className="voceMenu">
                 <MdViewList className="iconaMenu" />
-                <span>View Community requests</span>
+                <span>View your requests</span>
               </div>
           </Link>
       </div>

@@ -13,7 +13,7 @@ const RequestDetail = () => {
   const [showMetrics, setShowMetrics] = useState(false);
   const [showSmells, setShowSmells] = useState(false);
   const [author, setAuthor] = useState();
-
+  const [repository, setRepository] = useState();
 
   useEffect(() => {
     const jobId = sessionStorage.getItem("job_id");
@@ -202,6 +202,8 @@ const RequestDetail = () => {
         setPatterns(data.results.patterns)
 
         setAuthor(data.results.author)
+        
+        setRepository(data.results.repository)
 
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -230,7 +232,8 @@ const RequestDetail = () => {
         </div>
         <CommunityGraph graphData={graphData} />
         <div className="voceMenu floating-back author-button">
-          <span>Author: {author}</span>
+          <div>Author: {author}</div>
+          <div>Repository: {author}</div>
         </div>
     
       {showMetrics && (
@@ -262,12 +265,13 @@ const RequestDetail = () => {
         <div className="overlay">
           <table className="transparent-table">
             <thead>
-              <tr><th>Pattern</th><th>Detected</th></tr>
+              <tr><th>Pattern</th><th>Description</th><th>Detected</th></tr>
             </thead>
             <tbody>
               {patterns.map((pattern, index) => (
                 <tr key={index}>
                   <td>{pattern.name}</td>
+                  <td>{pattern.description}</td>
                   <td>{pattern.detected ? 'Yes' : 'No'}</td>
                 </tr>
               ))}

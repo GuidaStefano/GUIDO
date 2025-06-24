@@ -95,11 +95,15 @@
 }
 
 .vertical-div {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    display: flex;
+    flex-direction: row;
     gap: 16px;
     padding: 10px;
     margin-top: 40px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
     .voceMenu {
         display: flex;
         flex-direction: column;
@@ -170,4 +174,9 @@
     left: 54%;
     background-color: #f0f0f0;
     color: #00979B;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    font-size: large;
+    font-weight: 600;
 }
