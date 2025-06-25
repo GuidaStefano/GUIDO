@@ -22,7 +22,12 @@
 }
 
 .metrics-button {
-    left: 58%;
+    left: 50%;
+    cursor: pointer;
+}
+
+.members-button {
+    left: 70%;
     cursor: pointer;
 }
 

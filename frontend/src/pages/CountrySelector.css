@@ -18,6 +18,19 @@
   width: 85%;
   background-color: white;
   height: 100vh;
+
+  .modal-content {
+    max-width: 50%;
+  }
+}
+
+.community-inspector-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 85%;
+  background-color: white;
+  height: 100vh;
 }
 
 .expand_page {

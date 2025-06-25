@@ -8,7 +8,7 @@ const CommunityInspector = () => {
   
 
   return (
-    <div className="country-selector-page page">
+    <div className="community-inspector-page page">
       <div class="chatbot-header">Powered By TOAD</div>
         <div className="header-country">
           <h2>Community Inspector</h2>

@@ -57,15 +57,15 @@ const CommunityInsertRequest = () => {
     if (valid) {
       const parts = request.repoUrl.replace("https://github.com/", "").split("/");
       const output = {
-        request: {
+        
           author: parts[0].replace(/[^a-zA-Z0-9_\.]/g, "_").toLowerCase(),
           repository: parts[1],
           end_date: request.endDate
-        }
+        
       };
 
       try {
-        const response = await fetch('https://toadmock.free.beeceptor.com/resolve_intent', {//replace localhost
+        const response = await fetch("http://localhost:5005/resolve_intent", {//replace localhost
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(output)
@@ -92,7 +92,7 @@ const CommunityInsertRequest = () => {
   };
 
   return (
-    <div className="country-selector-page page">
+    <div className="community-inspector-page page">
       <div className="chatbot-header">Powered By TOAD</div>
       <div className="header-country">
         <h2>Insert Request</h2>
@@ -149,7 +149,7 @@ const CommunityInsertRequest = () => {
                 <p>{modalSubMsg}</p>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary" onClick={() => window.location.href = "/community-inspector"}>OK</button>
+                <button type="button" className="btn-primary" onClick={() => window.location.href = "/community-inspector"}>OK</button>
               </div>
             </div>
           </div>
