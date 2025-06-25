@@ -1,21 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
 
-const graphData = {
-  nodes: [
-    { id: "david-durrleman" },
-    { id: "anders9ustafsson" },
-    { id: "cesarsouza" }
-  ],
-  links: [
-    { source: "david-durrleman", target: "anders9ustafsson", weight: 1 }
-  ]
-};
-
-const CommunityGraph = () => {
+const CommunityGraph = ({graphData}) => {
   const fgRef = useRef();
-
- 
+  
 
   return (
     <div style={{ height: '100%', maxHeight: "85vh" }}>

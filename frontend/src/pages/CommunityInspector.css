@@ -18,7 +18,22 @@
     position: absolute;
     z-index: 10;
     top: 30px;
-    left: 310px;
+    left: 25%;
+}
+
+.metrics-button {
+    left: 50%;
+    cursor: pointer;
+}
+
+.members-button {
+    left: 70%;
+    cursor: pointer;
+}
+
+.smells-button{
+    left: 90%;
+    cursor: pointer;
 }
 
 .form-request {
@@ -32,7 +47,7 @@
 
     input {
         border-radius: 5px;
-        width: 300px;
+        width: 400px;
         height: 40px;
         padding-inline: 5px;
         font-size: large;
@@ -65,6 +80,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-width: 440px;
+    
 }
 
 .vertical-buttons {
@@ -83,11 +100,15 @@
 }
 
 .vertical-div {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    display: flex;
+    flex-direction: row;
     gap: 16px;
     padding: 10px;
     margin-top: 40px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
     .voceMenu {
         display: flex;
         flex-direction: column;
@@ -121,5 +142,75 @@
             color: #00979B;
             fill: #00979B;
         }
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 150px;
+    left: 25%;
+    width: 70%;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+    z-index: 1000;
+    border-radius: 8px;
+}
+
+.transparent-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.transparent-table th,
+.transparent-table td {
+  border: 1px solid #999;
+  padding: 8px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.author-button {
+    top: unset;
+    bottom: 40px;
+    left: 54%;
+    background-color: #f0f0f0;
+    color: #00979B;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    font-size: large;
+    font-weight: 600;
+}
+
+.hor-div {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 10px;
+    margin-top: 40px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: red;
+    font-size: large;
+    font-weight: 600;
+    .voceMenu {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        padding: 30px;
+        text-decoration: none;
+        color: black;
+        height: 300px;
+        width: 300;
+        justify-content: center;
+        align-items: center;
+        font-size: medium;
+        font-weight: 600;
     }
 }
