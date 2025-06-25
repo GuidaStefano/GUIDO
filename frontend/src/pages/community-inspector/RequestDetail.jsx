@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../ChatbotPage.css';
 import '../CommunityInspector.css';
-import { MdChat, MdArrowBack, MdViewList } from 'react-icons/md';
 import { Link, useNavigate } from "react-router-dom";
 import CommunityGraph from '../../components/CommunityGraph';
+import { MdArrowBack, MdDynamicForm, MdViewList } from 'react-icons/md';
 
 const RequestDetail = () => {
   const fgRef = useRef();
@@ -14,13 +14,16 @@ const RequestDetail = () => {
   const [showSmells, setShowSmells] = useState(false);
   const [author, setAuthor] = useState();
   const [repository, setRepository] = useState();
+  const [showNotJobId, setShowNotJobId] = useState(false);
 
   useEffect(() => {
     const jobId = sessionStorage.getItem("job_id");
 
     if (!jobId) {
-      console.error("No job_id found in sessionStorage");
+      setShowNotJobId(true)
       return;
+    } else {
+      setShowNotJobId(false)
     }
 
     const fetchData = async () => {
@@ -231,10 +234,29 @@ const RequestDetail = () => {
           </div>
         </div>
         <CommunityGraph graphData={graphData} />
-        <div className="voceMenu floating-back author-button">
-          <div>Author: {author}</div>
-          <div>Repository: {author}</div>
-        </div>
+        {!showNotJobId &&
+          <div className="voceMenu floating-back author-button">
+            <div>Author: {author}</div>
+            <div>Repository: {repository}</div>
+          </div>
+        }
+
+        {!showNotJobId &&
+          <div className="voceMenu floating-back author-button">
+            <div>Author: {author}</div>
+            <div>Repository: {repository}</div>
+          </div>
+        }
+
+      {showNotJobId &&
+        <Link to={"/community-insert-requests"} className="voceMenuText">
+            <div className="voceMenu">
+              <MdDynamicForm className="iconaMenu" />
+              <span>Insert request</span>
+            </div>
+        </Link>
+      }
+        
     
       {showMetrics && (
         <div className="overlay">

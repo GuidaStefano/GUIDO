@@ -180,3 +180,32 @@
     font-size: large;
     font-weight: 600;
 }
+
+.hor-div {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 10px;
+    margin-top: 40px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: red;
+    font-size: large;
+    font-weight: 600;
+    .voceMenu {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        padding: 30px;
+        text-decoration: none;
+        color: black;
+        height: 300px;
+        width: 300;
+        justify-content: center;
+        align-items: center;
+        font-size: medium;
+        font-weight: 600;
+    }
+}

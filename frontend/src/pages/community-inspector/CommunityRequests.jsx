@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import '../ChatbotPage.css';
 import '../CommunityInspector.css';
-import { MdArrowBack } from 'react-icons/md';
+import { MdArrowBack, MdDynamicForm, MdViewList } from 'react-icons/md';
 import { Link } from "react-router-dom";
 
 const CommunityRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [showNotJobId, setShowNotJobId] = useState(false);
 
   useEffect(() => {
     const jobId = sessionStorage.getItem("job_id");
 
-    if (!jobId) {
-      console.error("No job_id found in sessionStorage");
+     if (!jobId) {
+      setShowNotJobId(true)
       return;
+    } else {
+      setShowNotJobId(false)
     }
 
     const fetchData = async () => {
@@ -216,8 +219,7 @@ const CommunityRequests = () => {
           </div>
         </Link>
       </div>
-
-      {requests.length === 0 && <p>No requests found.</p>}
+      {!showNotJobId &&
         <div className='vertical-div'>
           {requests.map((req, index) => (
               <Link className='voceMenu'
@@ -237,8 +239,21 @@ const CommunityRequests = () => {
                   </div>
                 </div>
               </Link>
-        ))}
+          ))}
+        
         </div>
+      }
+      {showNotJobId &&
+        <div className='hor-div'>
+          <span>No request found please click the following link to add requests</span>
+          <Link to={"/community-insert-requests"} className="voceMenuText">
+              <div className="voceMenu">
+                <MdDynamicForm className="iconaMenu" />
+                <span>Insert request</span>
+              </div>
+          </Link>
+        </div>
+      }
       </div>
     </div>
   );
