@@ -83,14 +83,8 @@ def resolve():
     json: risultato dell'analisi del messaggio
     """
     global numReq
-    print("Richiesta Ricevuta")
     try:
         data = request.get_json()
-        if data is None:
-            print("DEBUG: get_json() returned None")
-            print("DEBUG: request.data:", request.data)
-            print("DEBUG: request.content_type:", request.content_type)
-            return jsonify({"error": "Invalid request: JSON required"}), 400
         # se c'è il campo message
         if 'message' in data:
             intent_manager = IntentManager()
@@ -100,7 +94,7 @@ def resolve():
         elif 'job_id' in data:
             if numReq < 3:
                 numReq += 1
-                return jsonify({"job_id": data['job_id'], "status": "PENDING"})
+                return jsonify({"job_id": data['job_id'], "status": "PENDING", "author": "daniele_rossi", "repository": "toad-wrapper", "start_date": "2017-01-31", "end_date": "2017-05-01"})
             else:
                 return jsonify({
                     "job_id": data['job_id'],
