@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../ChatbotPage.css';
 import '../CommunityInspector.css';
 import { MdArrowBack, MdDynamicForm, MdViewList } from 'react-icons/md';
@@ -7,48 +7,68 @@ import { Link } from "react-router-dom";
 const CommunityRequests = () => {
   const [requests, setRequests] = useState([]);
   const [showNotJobId, setShowNotJobId] = useState(false);
+  const intervalRef = useRef(null);
 
-  useEffect(() => {
-    const jobId = sessionStorage.getItem("job_id");
+   useEffect(() => {
+      const jobId = sessionStorage.getItem("job_id");
 
-     if (!jobId) {
-      setShowNotJobId(true)
-      return;
-    } else {
-      setShowNotJobId(false)
-    }
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:5005/resolve_intent", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ job_id: jobId })
-        });
-
-        const data = await response.json();
-
-
-        console.log(data.status)
-        const req = [
-          {
-            author: data.results.author,
-            repository: data.results.repository,
-            status: data.status
-          }
-        ];
-
-        setRequests(req);
-        
-
-      } catch (err) {
-        console.error("Error fetching data:", err);
+      if (!jobId) {
+        setShowNotJobId(true);
+        return;
+      } else {
+        setShowNotJobId(false);
       }
-    };
 
-    fetchData();
+      const fetchData = async () => {
+        try {
+          const response = await fetch("http://localhost:5005/resolve_intent", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ job_id: jobId })
+          });
 
-  }, []);
+          const data = await response.json();
+
+          
+
+          if (data.status === "PENDING" && intervalRef.current === null) {
+            intervalRef.current = setInterval(fetchData, 10000);
+            const req = [{
+              status: data.status,
+              author: data.author,
+              repository: data.repository,
+              startDate: data.start_date,
+              endDate: data.end_date
+            }];
+            setRequests(req);
+          }
+
+          if (data.status === "SUCCESS" || data.status === "FAILED") {
+            const req = [{
+              author: data.results.author,
+              repository: data.results.repository,
+              status: data.status
+            }];
+            setRequests(req);
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+
+        } catch (err) {
+          console.error("Error fetching data:", err);
+        }
+      };
+
+      fetchData();
+
+      return () => {
+        if (intervalRef.current !== null) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+      };
+    }, []);
+
 
   return (
     <div className="community-inspector-page page">
@@ -83,7 +103,9 @@ const CommunityRequests = () => {
                         </div>
                         <div>Author: <label>{req.author}</label></div>
                         <div>Repository: <label>{req.repository}</label></div>
-                        <div>Status: <label>{req.status}</label></div>
+                        <div>Start date: <label>TEMP</label></div>
+                        <div>End date: <label>TEMP</label></div>
+                        <div>Status: <label style={{ color: "green", marginTop: "10px" }}>{req.status}</label></div>
                       </div>
                     </Link>
                   );
@@ -99,6 +121,8 @@ const CommunityRequests = () => {
                         <div>Author: <label>{req.author}</label></div>
                         <div>Repository: <label>{req.repository}</label></div>
                         <div>Status: <label>{req.status}</label></div>
+                        <div>Start date: <label>{req.startDate}</label></div>
+                        <div>End date: <label>{req.endDate}</label></div>
                         <div style={{ color: "red", marginTop: "10px" }}>
                           ❌ Failed to process
                         </div>
@@ -117,9 +141,13 @@ const CommunityRequests = () => {
                           </svg>
                         </div>
                         <div><label>Request</label></div>
+                        <div>Author: <label>{req.author}</label></div>
+                        <div>Repository: <label>{req.repository}</label></div>
+                        <div>Start date: <label>{req.startDate}</label></div>
+                        <div>End date: <label>{req.endDate}</label></div>
                         <div>
                           <div>Status: <label>{req.status}</label></div>
-                          <img src="https://i.sstatic.net/kOnzy.gif" alt="Loading..." style={{ height: "30px", marginTop: "10px" }} />
+                          <img src="/images/loading.gif" alt="Loading..." style={{ height: "30px", marginTop: "10px" }} />
                         </div>
                       </div>
                     </div>
