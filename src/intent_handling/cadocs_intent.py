@@ -7,3 +7,5 @@ class CadocsIntents(enum.Enum):
     Report = "report"
     Info = "info"
     Geodispersion = "geodispersion"
+    CommunityInspectorAnalyze = "community_inspector_analyze"
+    CommunityInspectorResults = "community_inspector_results"

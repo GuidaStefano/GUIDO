@@ -85,3 +85,96 @@ class CultureInspectorTool(Tool):
 
         return result
 
+#TODO: Sostituire gli URL Hard Coded con ENV
+class CommunityInspectorTool(Tool):
+    """
+        CommunityInspectorTool is a concrete strategy class (Strategy Design Pattern)
+        that integrates the TOAD tool into the GUIDO platform.
+
+        It supports two distinct intents:
+        - 'community_inspector_analyze': Launches a new TOAD analysis.
+        - 'community_inspector_results': Fetches the status or the result of a previous analysis.
+
+        Behavior:
+        ---------
+        - If the input `data` contains: author, repository, and end_date,
+          a POST request is sent to `/analyze` to start the analysis.
+
+            Input Example:
+            {
+                "author": "bundler",
+                "repository": "bundler",
+                "end_date": "2019-06-01"
+            }
+
+            Output Example (analysis started):
+            {
+                "job_id": "745225d1-298b-4925-b045-a90bb3a71eae"
+            }
+
+        - If the input `data` contains: job_id,
+          a GET request is first sent to `/status/{job_id}` to check the job status.
+
+            - If status is not 'SUCCESS', return the current status as-is:
+                {
+                    "job_id": "...",
+                    "status": "PENDING" | "STARTED" | "FAILED",
+                    ...
+                }
+
+            - If status is 'SUCCESS', a second GET request is sent to `/result/{job_id}`
+              to fetch the full analysis result.
+
+                Successful Result Example:
+                {
+                    "job_id": "...",
+                    "status": "SUCCESS",
+                    "results": {
+                        "patterns": [...],
+                        "metrics": {...},
+                        "graph": {...}
+                    }
+                }
+
+                Failed Result Example:
+                {
+                    "job_id": "...",
+                    "status": "FAILED",
+                    "error": "Invalid Repository: The Repo should contain at least 100 commits!"
+                }
+        """
+
+    def execute_tool(self, data: List):
+
+        # === Caso 1: Avviare nuova analisi ===
+        if "author" in data and "repository" in data and "end_date" in data:
+            try:
+                response = requests.post("http://127.0.0.1:8000/analyze", json=data)
+                response.raise_for_status()
+                return response.json()
+            except requests.RequestException as e:
+                return ["Error Starting Community Inspector Analysis", "500"]
+
+        # === Caso 2: Recuperare stato o risultato ===
+        elif "job_id" in data:
+            job_id = data["job_id"]
+            try:
+                # Recupera lo stato del job
+                status_response = requests.get(f"http://127.0.0.1:8000/status/{job_id}")
+                status_response.raise_for_status()
+                status_data = status_response.json()
+
+                # Se il job non è ancora completato, restituisce lo stato
+                if status_data.get("status") != "SUCCESS":
+                    return status_data
+
+                # Altrimenti recupera il risultato completo
+                result_response = requests.get(f"http://127.0.0.1:8000/result/{job_id}")
+                result_response.raise_for_status()
+                return result_response.json()
+
+            except requests.RequestException as e:
+                return ["Error With Community Inspector Results", "500"]
+
+        # === Caso non supportato ===
+        return ["The Parameters are not well formed!", "500"]

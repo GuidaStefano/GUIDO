@@ -169,6 +169,12 @@ def build_message(results, intent, entities, lang):
     elif intent == CadocsIntents.Geodispersion:
         response = results
         return response
+    elif intent == CadocsIntents.CommunityInspectorAnalyze:
+        response = results
+        return response
+    elif intent == CadocsIntents.CommunityInspectorResults:
+        response = results
+        return response
     else:
         response = build_error_message(lang)
         return response

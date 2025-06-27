@@ -1,6 +1,6 @@
 from src.intent_handling.cadocs_intent import CadocsIntents
 from src.intent_handling.tool_selector import ToolSelector
-from src.intent_handling.tools import CsDetectorTool, CultureInspectorTool
+from src.intent_handling.tools import CsDetectorTool, CultureInspectorTool, CommunityInspectorTool
 from datetime import datetime
 # the Intent Resolver is used to handle the execution given a predicted intent
 class IntentResolver:
@@ -37,7 +37,8 @@ class IntentResolver:
                 tool = ToolSelector(CultureInspectorTool())
                 results = tool.run(entities)
                 print(f"\n\n\nRESULT IN INTENT RESOLVER {results}")
-
                 return results
-
-        # else if intent in OtherToolIntent
+            elif intent == CadocsIntents.CommunityInspectorAnalyze or intent==CadocsIntents.CommunityInspectorResults:
+                tool = ToolSelector(CommunityInspectorTool())
+                results = tool.run(entities)
+                return results

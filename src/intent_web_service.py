@@ -14,7 +14,6 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-numReq = 0
 
 def build_intent(intent_value: str) -> CadocsIntents:
     """
@@ -56,7 +55,6 @@ def resolve_utils(data: dict, lang: str):
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": "An error occurred while resolving intent: " + str(e)}), 500
-
     return jsonify(build_message(result, build_intent(data['intent']), data['entities'], lang))
 
 
@@ -65,150 +63,67 @@ def resolve_utils(data: dict, lang: str):
 def resolve():
     """
     Funzione che si occupa di risolvere un intent richiamando IntentResolver.
+
     Parameters
-    -----------
-    data: json contenente il messaggio da analizzare che può essere di due tipi:
-        {
-            "message": "stringa del messaggio"
-        }
-        oppure
-        {
-            "entities": [
-                {"number": 1000, "nationality": "Germany"},
-                {"number": 1000, "nationality": "Italy"}
-            ]
-        }
+    ----------
+    data: json
+        Può contenere uno dei seguenti formati:
+
+        1. Analisi da testo libero (Chatbot - intent predetto automaticamente con CADOCS NLU):
+            {
+                "message": "stringa del messaggio"
+            }
+
+        2. Richiesta esplicita per tool CommunityInspector - avvio analisi:
+            {
+                "author": "nomeAutore",
+                "repository": "nomeRepository",
+                "end_date": "YYYY-MM-DD"
+            }
+
+        3. Richiesta esplicita per tool CommunityInspector - recupero risultati:
+            {
+                "job_id": "uuid-del-task"
+            }
+
+        4. Richiesta Esplicita per tool GeoDispersion:
+            {
+                "entities": [
+                    {"number": 1000, "nationality": "Germany"},
+                    {"number": 500, "nationality": "Italy"},
+                    ...
+                ]
+            }
+
     Returns
-    -----------
-    json: risultato dell'analisi del messaggio
+    -------
+    json
+        Risultato dell'analisi dell'intent e dell'esecuzione dello strumento associato.
+        Se l'input non è valido, restituisce un errore 400.
     """
-    global numReq
     try:
         data = request.get_json()
-        # se c'è il campo message
+        # se c'è il campo message bisogna predirre l`intent
         if 'message' in data:
             intent_manager = IntentManager()
             intent, entities, _, lang = intent_manager.detect_intent(data["message"])
             data = {"intent": intent.value, "entities": entities}
-        # TODO: questo è solo uno stub per provare le richieste dal frontend
+        # se c`è job_id l`intent è community_inspector_results
         elif 'job_id' in data:
-            if numReq < 3:
-                numReq += 1
-                return jsonify({"job_id": data['job_id'], "status": "PENDING", "author": "daniele_rossi", "repository": "toad-wrapper", "start_date": "2017-01-31", "end_date": "2017-05-01"})
-            else:
-                return jsonify({
-                    "job_id": data['job_id'],
-                    "status": "SUCCESS",
-                    "results": {
-                        "author": "daniele_rossi",
-                        "repository": "toad-wrapper",
-                        "patterns": [
-                            {
-                                "name": "Informal Community (IC)",
-                                "description": "Usually sets of people part of an organization, with a common interest, often closely dependent on their practice. Informal interactions, usually across unbound distances.",
-                                "detected": True
-                            },
-                            {
-                                "name": "Community of Practice (CoP)",
-                                "description": "Groups of people sharing a concern, a set of problems, or a passion about a topic, who deepen their knowledge and expertise in this area by interacting frequently in the same geolocation.",
-                                "detected": False
-                            },
-                            {
-                                "name": "Formal Network (FN)",
-                                "description": "Members are rigorously selected and prescribed by management (often in the form of FG), directed according to corporate strategy and mission.",
-                                "detected": True
-                            },
-                            {
-                                "name": "Social Network (SN)",
-                                "description": "SNs can be seen as a supertype for all OSSs. To identify an SN, it is sufficient to split the structure of organizational patterns into macrostructure and microstructure.",
-                                "detected": True
-                            },
-                            {
-                                "name": "Informal Network (IN)",
-                                "description": "Looser networks of ties between individuals that happen to come in contact in the same context. Their driving force is the strength of the ties between members.",
-                                "detected": False
-                            },
-                            {
-                                "name": "Network of Practice (NoP)",
-                                "description": "A networked system of communication and collaboration connecting CoPs. Anyone can join. They span geographical and time distances alike.",
-                                "detected": True
-                            },
-                            {
-                                "name": "Formal Group (FG)",
-                                "description": "People grouped by corporations to act on (or by means of) them. Each group has an organizational goal, called mission. Compared to FN, no reliance on networking technologies, local in nature.",
-                                "detected": False
-                            },
-                            {
-                                "name": "Project Team (PT)",
-                                "description": "People with complementary skills who work together to achieve a common purpose for which they are accountable. Enforced by their organization and follow specific strategies or organizational guidelines.",
-                                "detected": True
-                            }
-                        ],
-                        "metrics": {
-                            "dispersion": {
-                                "geo_distance_variance": 11354570.939798128,
-                                "avg_geo_distance": 3433.8892193812785,
-                                "cultural_distance_variance": 22.621716233057025
-                            },
-                            "engagement": {
-                                "m_comment_per_pr": 0.0,
-                                "mm_comment_dist": 1.0,
-                                "m_watchers": 0,
-                                "m_stargazers": 0.0,
-                                "m_active": 1.0,
-                                "mm_commit_dist": 0.0,
-                                "mm_filecollab_dist": 2.0
-                            },
-                            "formality": {
-                                "m_membership_type": 1.9166666666666667,
-                                "milestones": 36,
-                                "lifetime": 6274
-                            },
-                            "longevity": 77.8,
-                            "structure": {
-                                "repo_connections": True,
-                                "follow_connections": True,
-                                "pr_connections": True
-                            }
-                        },
-                        "graph": {
-                            "nodes": [
-                                "david-durrleman",
-                                "anders9ustafsson",
-                                "cesarsouza",
-                                "alice-martin",
-                                "bob-smith",
-                                "carla-ruiz",
-                                "deepak-sharma",
-                                "elena-fischer",
-                                "fabio-garcia",
-                                "gina-lee",
-                                "haruto-yamada",
-                                "ivan-petrov"
-                            ],
-                            "edges": [
-                                {"source": "david-durrleman", "target": "anders9ustafsson", "weight": 1},
-                                {"source": "david-durrleman", "target": "alice-martin", "weight": 2},
-                                {"source": "anders9ustafsson", "target": "cesarsouza", "weight": 3},
-                                {"source": "alice-martin", "target": "bob-smith", "weight": 1},
-                                {"source": "carla-ruiz", "target": "david-durrleman", "weight": 2},
-                                {"source": "deepak-sharma", "target": "carla-ruiz", "weight": 2},
-                                {"source": "elena-fischer", "target": "alice-martin", "weight": 1},
-                                {"source": "fabio-garcia", "target": "gina-lee", "weight": 1},
-                                {"source": "gina-lee", "target": "haruto-yamada", "weight": 3},
-                                {"source": "haruto-yamada", "target": "ivan-petrov", "weight": 2},
-                                {"source": "bob-smith", "target": "fabio-garcia", "weight": 1},
-                                {"source": "deepak-sharma", "target": "elena-fischer", "weight": 1},
-                                {"source": "ivan-petrov", "target": "carla-ruiz", "weight": 2}
-                            ]
-                        }
-                    }
-                })
-        # TODO: questo è solo uno stub per provare le richieste dal frontend
+            entities = {
+                "job_id": data['job_id']
+            }
+            data = {"intent": "community_inspector_results", "entities": entities}
+            lang = " "
+        # se ci sono author, repository ed end_date l`intent è community_inspector_analyze
         elif 'author' in data and 'repository' in data and 'end_date' in data:
-            job_id = str(uuid.uuid4())
-            numReq = 0
-            return jsonify({"job_id": job_id}), 200
+            entities = {
+                "author": data['author'],
+                "repository": data['repository'],
+                "end_date": data['end_date']
+            }
+            data = {"intent": "community_inspector_analyze", "entities": entities}
+            lang = " "
         else:
             # se non c'è message è probabilmente un geo-dispersion
             data = {"intent": "geodispersion", "entities": data['entities']}
@@ -216,7 +131,5 @@ def resolve():
 
     except :
         return jsonify({"error": "Invalid request: JSON required"}), 400
-
-    print("STO PROCESSANDO RISPOSTA...")
 
     return resolve_utils(data, lang)
