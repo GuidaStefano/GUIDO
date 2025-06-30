@@ -1,3 +1,6 @@
+#TEST SYSTE7:  Repository:  https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: request accepted'#
+
+
 import pytest
 import time
 import json

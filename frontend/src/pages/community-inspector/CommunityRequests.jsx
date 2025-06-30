@@ -90,7 +90,7 @@ const CommunityRequests = () => {
 
   return (
     <div className="community-inspector-page page">
-      <div class="chatbot-header">Powered By TOAD</div>
+      <div className="chatbot-header">Powered By TOAD</div>
       <div className="header-country">
         <h2>Your Requests</h2>      
       <div>

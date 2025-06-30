@@ -1,3 +1,5 @@
+#TEST SYSTE4:  Repository: https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: Richiesta accettata#
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -17,7 +19,7 @@ class TestSYSTE4:
     def test_sYSTE4(self):
         self.driver.get("http://localhost:3000/")
         self.driver.find_element(By.CSS_SELECTOR, "#\\33 > span").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".menu-inspect > .voceMenuText:nth-child(1) span").click()
+        self.driver.find_element(By.CSS_SELECTOR, ".insert-req").click()
 
         element = self.driver.find_element(By.CSS_SELECTOR, ".menu-inspect > .voceMenuText:nth-child(1) span")
         actions = ActionChains(self.driver)

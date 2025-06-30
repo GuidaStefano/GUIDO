@@ -1,3 +1,5 @@
+#TEST SYSTE3:  Repository: "" Data fine:  01/01/2019 -> Error: Errore Please enter a valid GitHub repository URL (https://github.com/username/repo)#
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -17,7 +19,7 @@ class TestSYSTE3:
     def test_sYSTE3(self):
         self.driver.get("http://localhost:3000/")
         self.driver.find_element(By.CSS_SELECTOR, "#\\33 > span").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".menu-inspect > .voceMenuText:nth-child(1) span").click()
+        self.driver.find_element(By.CSS_SELECTOR, ".insert-req").click()
 
         element = self.driver.find_element(By.CSS_SELECTOR, ".menu-inspect > .voceMenuText:nth-child(1) span")
         actions = ActionChains(self.driver)
@@ -29,9 +31,12 @@ class TestSYSTE3:
         self.driver.find_element(By.CSS_SELECTOR, ".btn-primary:nth-child(1)").click()
 
         try:
-          WebDriverWait(self.driver, 5).until(
-              EC.visibility_of_element_located((By.CSS_SELECTOR, "div.div-input .error-msg"))
-          )
-          assert True, "Returned error Please enter a valid GitHub repository URL (https://github.com/user)"
+            error_element = WebDriverWait(self.driver, 2).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, ".error-msg"))
+            )
+            if(error_element.text.strip().lower() == ("Please enter a valid GitHub repository URL (https://github.com/username/repo)").strip().lower()):
+              assert True, "Returned error Please enter a valid GitHub repository URL (https://github.com/user)"
+            else:
+              assert False, "System didn't return the correct error"
         except TimeoutException:
-          assert False, "System didn't return the correct error"
+            assert False, "System didn't return the correct error"

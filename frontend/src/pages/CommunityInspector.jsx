@@ -10,7 +10,7 @@ const CommunityInspector = () => {
   const [isLocked, setIsLocked] = useState(false);
 
   useEffect(() => {
-    const locked = sessionStorage.getItem('is_insert_locked') === 'true';
+    const locked = sessionStorage.getItem('is_insert_locked') == 'true';
     setIsLocked(locked);
 
     if (locked && insertRef.current) {
@@ -40,7 +40,7 @@ const CommunityInspector = () => {
               if (isLocked) e.preventDefault();
             }}
           >
-            <div className="voceMenu">
+            <div className="voceMenu insert-req">
               <MdDynamicForm className="iconaMenu" />
               <span>Insert request</span>
             </div>

@@ -1,3 +1,5 @@
+#TEST SYSTE6:  Repository: https://github.com/rubygems/bundler Data fine:  "" -> Error: The date must be today or a date in the past#
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -17,7 +19,7 @@ class TestSYSTE5:
     def test_sYSTE5(self):
         self.driver.get("http://localhost:3000/")
         self.driver.find_element(By.CSS_SELECTOR, "#\\33 > span").click()
-        self.driver.find_element(By.CSS_SELECTOR, ".menu-inspect > .voceMenuText:nth-child(1) span").click()
+        self.driver.find_element(By.CSS_SELECTOR, ".insert-req").click()
 
         element = self.driver.find_element(By.CSS_SELECTOR, ".menu-inspect > .voceMenuText:nth-child(1) span")
         actions = ActionChains(self.driver)
@@ -29,9 +31,12 @@ class TestSYSTE5:
         self.driver.find_element(By.CSS_SELECTOR, ".btn-primary:nth-child(1)").click()
 
         try:
-          WebDriverWait(self.driver, 5).until(
-              EC.visibility_of_element_located((By.CSS_SELECTOR, "div.div-input .error-date-msg"))
-          )
-          assert True, "The date must be today or a date in the past"
+            error_element = WebDriverWait(self.driver, 2).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, ".error-date-msg"))
+            )
+            if(error_element.text.strip().lower() == ("The date must be today or a date in the past").strip().lower()):
+              assert True, "Returned error The date must be today or a date in the past"
+            else:
+              assert False, "System didn't return the correct error"
         except TimeoutException:
-          assert False, "System didn't return the correct error"
+            assert False, "System didn't return the correct error"
