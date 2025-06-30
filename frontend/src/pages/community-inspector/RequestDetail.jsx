@@ -116,26 +116,34 @@ const RequestDetail = () => {
         <div className="overlay">
           <table className="transparent-table">
             <thead>
-              <tr><th>Metric</th><th>Value</th></tr>
+              <tr>
+                <th>Metric</th>
+                <th>Description</th>
+                <th>Value</th>
+              </tr>
             </thead>
             <tbody>
-              {Object.entries(metrics).map(([key, value]) => (
-                typeof value === 'object' ? Object.entries(value).map(([k, v]) => (
-                  <tr key={`${key}-${k}`}>
-                    <td>{key}.{k}</td>
-                    <td>{String(v)}</td>
+              {Object.entries(metrics).map(([section, values]) => (
+                <React.Fragment key={section}>
+                  <tr>
+                    <td colSpan="3" style={{ fontWeight: 'bold', background: '#f0f0f0' }}>
+                      {section.toUpperCase()}
+                    </td>
                   </tr>
-                )) : (
-                  <tr key={key}>
-                    <td>{key}</td>
-                    <td>{String(value)}</td>
-                  </tr>
-                )
+                  {Object.entries(values).map(([metricKey, metricObj]) => (
+                    <tr key={`${section}.${metricKey}`}>
+                      <td>{section}.{metricKey}</td>
+                      <td>{metricObj.description}</td>
+                       <td>{String(metricObj.value)}</td>
+                    </tr>
+                  ))}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
         </div>
       )}
+
 
       {showSmells && (
         <div className="overlay">
