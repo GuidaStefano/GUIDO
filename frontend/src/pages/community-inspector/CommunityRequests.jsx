@@ -109,7 +109,7 @@ const CommunityRequests = () => {
                 if (req.status === "SUCCESS") {
                   return (
                     <Link
-                      className='voceMenu'
+                      className='voceMenu success-answer'
                       key={index}
                       to={`/request-detail?author=${encodeURIComponent(req.author)}&repository=${encodeURIComponent(req.repository)}`}
                     >
@@ -129,7 +129,7 @@ const CommunityRequests = () => {
                   );
                 } else if (req.status === "FAILED") {
                   return (
-                    <div key={index} className='voceMenu error'>
+                    <div key={index} className='voceMenu error failed-answer'>
                       <div className='flex-col'>
                         <div>
                           <svg className="error" height="50" aria-hidden="true" viewBox="0 0 24 24" version="1.1" width="50" data-view-component="true" class="octicon octicon-mark-github v-align-middle">
@@ -141,7 +141,7 @@ const CommunityRequests = () => {
                         <div>Status: <label>{req.status}</label></div>
                         <div>Start date: <label>{req.startDate}</label></div>
                         <div>End date: <label>{req.endDate}</label></div>
-                        <div style={{ color: "red", marginTop: "15px" }}>
+                        <div className = "specific-error" style={{ color: "red", marginTop: "15px" }}>
                           {req.error}
                         </div>
                       </div>

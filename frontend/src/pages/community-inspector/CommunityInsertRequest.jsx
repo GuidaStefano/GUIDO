@@ -118,7 +118,7 @@ const CommunityInsertRequest = () => {
               onChange={(e) => handleInputChange('repoUrl', e.target.value)}
             />
             {error && error.repoUrl &&
-              <div style={{ color: 'red', fontSize: '0.9em' }}>{error.repoUrl}</div>
+              <div className="error-msg" style={{ color: 'red', fontSize: '0.9em' }}>{error.repoUrl}</div>
             }
 
             <input
@@ -127,7 +127,7 @@ const CommunityInsertRequest = () => {
               onChange={(e) => handleInputChange('endDate', e.target.value)}
             />
             {error && error.endDate &&
-              <div style={{ color: 'red', fontSize: '0.9em' }}>{error.endDate}</div>
+              <div className="error-date-msg" style={{ color: 'red', fontSize: '0.9em' }}>{error.endDate}</div>
             }
           </div>
         </div>

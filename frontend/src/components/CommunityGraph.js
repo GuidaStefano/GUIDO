@@ -15,7 +15,7 @@ const MyGraph = ({ graphData }) => {
         existingTooltip.dispose();
       }
 
-      sliderRef.current.setAttribute('title', `Distanza tra nodi: ${distance}`);
+      sliderRef.current.setAttribute('title', `Node Distance: ${distance}`);
 
       new bootstrap.Tooltip(sliderRef.current);
     }
@@ -68,7 +68,7 @@ const MyGraph = ({ graphData }) => {
             onChange={(e) => setDistance(Number(e.target.value))}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
-            title={`Distanza tra nodi: ${distance}`}
+            title={`Node Distance: ${distance}`}
           />
         </label>
 
