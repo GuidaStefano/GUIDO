@@ -41,9 +41,9 @@ const RequestDetail = () => {
 
         console.log(data)
 
-        setAuthor(data.results.author)
+        setAuthor(data.author)
         
-        setRepository(data.results.repository)
+        setRepository(data.repository)
 
         if(data.status == "SUCCESS") {
           setGraphData({

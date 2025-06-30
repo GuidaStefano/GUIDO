@@ -80,6 +80,7 @@ const CommunityInsertRequest = () => {
           setModalMsg("Request sent successfully!");
           setModalSubMsg("Check the result in previous area");
           sessionStorage.setItem("job_id", data.job_id);
+          sessionStorage.setItem("is_insert_locked", true);
         }
 
       } catch (err) {

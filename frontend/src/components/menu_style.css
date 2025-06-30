@@ -45,6 +45,12 @@
     -webkit-box-shadow: 2px 2px 14px -1px rgba(0, 0, 0, 0.56);
 }
 
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .voceMenuActive {
     background-color: #00979B;
     color: #f2f2f2;

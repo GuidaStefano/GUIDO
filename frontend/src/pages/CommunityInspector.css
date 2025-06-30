@@ -9,7 +9,7 @@
         width: auto !important;
     }
 
-    .voceMenuText  {
+    .voceMenuText {
         width: auto !important;
     }
 }
@@ -31,7 +31,7 @@
     cursor: pointer;
 }
 
-.smells-button{
+.smells-button {
     left: 90%;
     cursor: pointer;
 }
@@ -65,7 +65,7 @@
         width: 95px;
         font-size: medium;
     }
-} 
+}
 
 .div-input {
     display: flex;
@@ -81,7 +81,7 @@
     flex-direction: column;
     gap: 20px;
     max-width: 440px;
-    
+
 }
 
 .vertical-buttons {
@@ -109,6 +109,7 @@
     align-items: center;
     height: 100%;
     width: 100%;
+
     .voceMenu {
         display: flex;
         flex-direction: column;
@@ -142,6 +143,14 @@
             color: #00979B;
             fill: #00979B;
         }
+
+        .error {
+            fill: red !important;
+        }
+
+        .pending {
+            fill: yellow !important;
+        }
     }
 }
 
@@ -160,17 +169,17 @@
 }
 
 .transparent-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: transparent;
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent;
 }
 
 .transparent-table th,
 .transparent-table td {
-  border: 1px solid #999;
-  padding: 8px;
-  text-align: left;
-  background: rgba(255, 255, 255, 0.5);
+    border: 1px solid #999;
+    padding: 8px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .author-button {
@@ -199,6 +208,7 @@
     color: red;
     font-size: large;
     font-weight: 600;
+
     .voceMenu {
         display: flex;
         flex-direction: column;
@@ -213,4 +223,58 @@
         font-size: medium;
         font-weight: 600;
     }
+}
+
+.label-distance {
+
+    z-index: 100;
+    position: absolute;
+    right: 63px;
+    top: 28%;
+
+
+    .input-slide {
+
+        transform: rotate(270deg) translateY(-50%);
+        transform-origin: right center;
+        max-width: 300px;
+        appearance: none;
+        background: transparent;
+    }
+
+    .input-slide::-webkit-slider-runnable-track {
+        height: 6px;
+        background: white;
+        border-radius: 3px;
+        border: black 1px solid;
+    }
+
+    .input-slide::-moz-range-track {
+        height: 6px;
+        background: white;
+        border-radius: 3px;
+        border: black 1px solid;
+
+    }
+
+    .input-slide::-webkit-slider-thumb {
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        background: #00979B;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        margin-top: -5px;
+    }
+
+    .input-slide::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: #00979B;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+    }
+
 }
