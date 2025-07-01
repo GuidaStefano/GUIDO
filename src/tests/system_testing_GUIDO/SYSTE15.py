@@ -1,4 +1,4 @@
-#TEST SYSTE15:  Repository:  https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: request returned and graph is displayed'##
+#TEST SYSTE16:  Repository:  https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: request returned and smells table is displayed'##
 
 import pytest
 import time
@@ -14,7 +14,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class TestSYSTE15():
+class TestSYSTE16():
   def setup_method(self, method):
     self.driver = webdriver.Firefox()
     self.vars = {}
@@ -22,7 +22,7 @@ class TestSYSTE15():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_sYSTE15(self):
+  def test_sYSTE16(self):
     self.driver.get("http://localhost:3000/")
     self.driver.set_window_size(1290, 828)
     self.driver.find_element(By.CSS_SELECTOR, "#\\33 > span").click()
@@ -44,8 +44,12 @@ class TestSYSTE15():
 
         time.sleep(5)
 
-        graph_present = self.driver.find_element(By.CSS_SELECTOR, ".graph-div")
-        assert graph_present.is_displayed(), "Graph is displayed as expected"
+        self.driver.find_element(By.CSS_SELECTOR, ".smells-button").click()
+
+        time.sleep(2)
+
+        smell_present = self.driver.find_element(By.CSS_SELECTOR, ".smells-table")
+        assert smell_present.is_displayed(), "Smells are displayed as expected"
     except TimeoutException:
         assert False, "The system didn't return correct request"
 
