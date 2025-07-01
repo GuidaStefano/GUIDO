@@ -1,4 +1,4 @@
-#TEST SYSTE8:  Repository:  https://github.com/StefanoLambiase/GUIDO Data fine:  04/06/2025 -> Error: 'Invalid Repository: There must be at least 100 commits!'#
+#TEST SYSTE15:  Repository:  https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: request returned and graph is displayed'##
 
 import pytest
 import time
@@ -14,7 +14,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class TestSYSTE8():
+class TestSYSTE15():
   def setup_method(self, method):
     self.driver = webdriver.Firefox()
     self.vars = {}
@@ -22,13 +22,13 @@ class TestSYSTE8():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_sYSTE8(self):
+  def test_sYSTE15(self):
     self.driver.get("http://localhost:3000/")
     self.driver.set_window_size(1290, 828)
     self.driver.find_element(By.CSS_SELECTOR, "#\\33 > span").click()
     self.driver.find_element(By.CSS_SELECTOR, ".insert-req").click()
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(1)").click()
-    self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(1)").send_keys("https://github.com/StefanoLambiase/GUIDO")
+    self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(1)").send_keys("https://github.com/rubygems/bundler")
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(2)").click()
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(2)").send_keys("2019-01-01")
     self.driver.find_element(By.CSS_SELECTOR, ".btn-primary:nth-child(1)").click()
@@ -37,13 +37,15 @@ class TestSYSTE8():
     self.driver.find_element(By.CSS_SELECTOR, ".flex-col > div:nth-child(1)").click()
 
     try:
-        error_element = WebDriverWait(self.driver, 720).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, ".failed-answer .specific-error"))
+        success_elem = WebDriverWait(self.driver, 720).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".success-answer"))
         )
-        if(error_element.text.strip().lower() == ("Invalid Repository: There must be at least 100 commits!").lower()):
-          assert True, "The system returned the right error message 'Invalid Repository: There must be at least 100 commits!'"
-        else:
-          assert False, "The system didn't returned the right error message 'Invalid Repository: There must be at least 100 commits!'"
+        success_elem.click()
+
+        time.sleep(5)
+
+        graph_present = self.driver.find_element(By.CSS_SELECTOR, ".graph-div")
+        assert graph_present.is_displayed(), "Graph is displayed as expected"
     except TimeoutException:
-        assert False, "The system returned the any error message"
+        assert False, "The system didn't return correct request"
 

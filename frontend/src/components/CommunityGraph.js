@@ -42,7 +42,7 @@ const MyGraph = ({ graphData }) => {
 
   return (
     <>
-      <div style={{ height: '100%', maxHeight: "85vh" }}>
+      <div className = "graph-div" style={{ height: '100%', maxHeight: "85vh" }}>
         <ForceGraph3D
           ref={fgRef}
           graphData={graphData}

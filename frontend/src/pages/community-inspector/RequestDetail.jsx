@@ -114,7 +114,7 @@ const RequestDetail = () => {
     
       {showMetrics && (
         <div className="overlay">
-          <table className="transparent-table">
+          <table className="transparent-table metrics-table">
             <thead>
               <tr>
                 <th>Metric</th>
@@ -147,7 +147,7 @@ const RequestDetail = () => {
 
       {showSmells && (
         <div className="overlay">
-          <table className="transparent-table">
+          <table className="transparent-table smells-table">
             <thead>
               <tr><th>Pattern</th><th>Description</th><th>Detected</th></tr>
             </thead>
@@ -166,7 +166,7 @@ const RequestDetail = () => {
 
       {showMembers && (
         <div className="overlay">
-          <table className="transparent-table">
+          <table className="transparent-table members-table">
             <thead>
               <tr>
                 <th>Member GitName</th>

@@ -27,7 +27,7 @@ class TestSYSTE7():
     self.driver.get("http://localhost:3000/")
     self.driver.set_window_size(1290, 828)
     self.driver.find_element(By.CSS_SELECTOR, "#\\33 > span").click()
-    self.driver.find_element(By.CSS_SELECTOR, ".menu-inspect > .voceMenuText:nth-child(1) > .voceMenu").click()
+    self.driver.find_element(By.CSS_SELECTOR, ".insert-req").click()
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(1)").click()
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(1)").send_keys("https://github.com/rubygems/bundler")
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(2)").click()
