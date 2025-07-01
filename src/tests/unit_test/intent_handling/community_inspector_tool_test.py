@@ -5,9 +5,13 @@ from src.intent_handling.tools import CommunityInspectorTool
 
 tool = CommunityInspectorTool()
 
-# Simula l'avvio di un'analisi TOAD (POST /analyze)
+
 @patch('src.intent_handling.tools.requests.post')
 def test_analyze_success(mock_post):
+    """
+    Simula l'avvio di un'analisi TOAD tramite POST /analyze con una risposta di successo.
+    Verifica che venga restituito correttamente il job_id.
+    """
     mock_post.return_value = Mock(status_code=200, json=lambda: {
         "job_id": "04cf0926-1443-47f9-ba50-e66f80a73ef2"
     })
@@ -15,17 +19,25 @@ def test_analyze_success(mock_post):
     result = tool.execute_tool(data)
     assert result["job_id"] == "04cf0926-1443-47f9-ba50-e66f80a73ef2"
 
-# Simula un fallimento durante POST /analyze (es. timeout)
+
 @patch('src.intent_handling.tools.requests.post')
 def test_analyze_failure(mock_post):
+    """
+    Simula un errore (es. timeout o errore server) durante POST /analyze.
+    Verifica che venga restituito un errore generico gestito.
+    """
     mock_post.side_effect = RequestException("Timeout")
     data = {"author": "foo", "repository": "bar", "end_date": "2024-01-01"}
     result = tool.execute_tool(data)
     assert result == ["Error Starting Community Inspector Analysis", "500"]
 
-# Simula GET /status/{job_id} con stato STARTED
+
 @patch('src.intent_handling.tools.requests.get')
 def test_status_pending(mock_get):
+    """
+    Simula il caso in cui GET /status/{job_id} restituisce stato PENDING o STARTED.
+    Verifica che lo stato intermedio venga gestito e restituito correttamente.
+    """
     mock_get.return_value = Mock(status_code=200, json=lambda: {
         "job_id": "3cae6c4b-2f58-4876-a6c6-23fb4be8bd6b",
         "status": "STARTED",
@@ -38,9 +50,13 @@ def test_status_pending(mock_get):
     result = tool.execute_tool(data)
     assert result["status"] == "STARTED"
 
-# Simula GET /status/{job_id} che restituisce FALLIMENTO
+
 @patch('src.intent_handling.tools.requests.get')
 def test_status_failed(mock_get):
+    """
+    Simula il caso in cui GET /status/{job_id} restituisce stato FAILED.
+    Verifica che venga restituito l'errore completo incluso il messaggio.
+    """
     mock_get.return_value = Mock(status_code=200, json=lambda: {
         "job_id": "e687a545-1aec-42c3-ae45-7e26b68afa8d",
         "status": "FAILED",
@@ -55,9 +71,14 @@ def test_status_failed(mock_get):
     assert result["status"] == "FAILED"
     assert "error" in result
 
-# Simula stato SUCCESS e recupero risultato completo
+
 @patch('src.intent_handling.tools.requests.get')
 def test_status_success_result_ok(mock_get):
+    """
+    Simula il flusso completo:
+    GET /status/{job_id} restituisce SUCCESS → segue GET /result/{job_id}.
+    Verifica che il risultato finale contenga 'results', 'patterns' e 'metrics'.
+    """
     def side_effect(url, *args, **kwargs):
         if "status" in url:
             return Mock(status_code=200, json=lambda: {"status": "SUCCESS"})
@@ -103,9 +124,13 @@ def test_status_success_result_ok(mock_get):
     assert "patterns" in result["results"]
     assert "metrics" in result["results"]
 
-# Simula errore durante il recupero di /result/{job_id} dopo SUCCESS
+
 @patch('src.intent_handling.tools.requests.get')
 def test_status_success_result_error(mock_get):
+    """
+    Simula un errore durante GET /result/{job_id} dopo che /status ha restituito SUCCESS.
+    Verifica che venga restituito l'errore generico previsto.
+    """
     def side_effect(url, *args, **kwargs):
         if "status" in url:
             return Mock(status_code=200, json=lambda: {"status": "SUCCESS"})
@@ -116,8 +141,12 @@ def test_status_success_result_error(mock_get):
     result = tool.execute_tool(data)
     assert result == ["Error With Community Inspector Results", "500"]
 
-# Input privo di chiavi riconosciute → errore formattazione
+
 def test_malformed_input():
+    """
+    Testa il caso in cui venga fornito un input malformato o incompleto.
+    Verifica che venga restituito un errore 500 per parametri non validi.
+    """
     data = {"invalid": "value"}
     result = tool.execute_tool(data)
     assert result == ["The Parameters are not well formed!", "500"]
