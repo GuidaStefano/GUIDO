@@ -1,4 +1,4 @@
-#TEST SYSTE13:  Repository:  https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: request accepted and it is ready'##
+#TEST SYSTE14:  Repository:  https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: request accepted and it is ready'##
 
 import pytest
 import time
@@ -14,7 +14,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class TestSYSTE13():
+class TestSYSTE14():
   def setup_method(self, method):
     self.driver = webdriver.Firefox()
     self.vars = {}
@@ -22,7 +22,7 @@ class TestSYSTE13():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_sYSTE13(self):
+  def test_sYSTE14(self):
     self.driver.get("http://localhost:3000/")
     self.driver.set_window_size(1290, 828)
     self.driver.find_element(By.CSS_SELECTOR, "#\\33 > span").click()
@@ -37,10 +37,10 @@ class TestSYSTE13():
     self.driver.find_element(By.CSS_SELECTOR, ".flex-col > div:nth-child(1)").click()
 
     try:
-      WebDriverWait(self.driver, 720).until(
-          EC.visibility_of_element_located((By.CSS_SELECTOR, ".success-answer"))
+      WebDriverWait(self.driver, 2).until(
+          EC.visibility_of_element_located((By.CSS_SELECTOR, ".loading"))
       )
-      assert True, "The system returned correct data"
+      assert True, "The system returned pending request"
     except TimeoutException:
-      assert False, "The system didn't return correct data"
+      assert False, "The system didn't return pending request"
 

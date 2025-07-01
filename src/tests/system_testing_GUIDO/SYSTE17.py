@@ -1,4 +1,4 @@
-#TEST SYSTE17:  Repository:  https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: request returned and metrics table is displayed'##
+#TEST SYSTE18:  Repository:  https://github.com/rubygems/bundler Data fine:  01/01/2019 -> Success: request returned and members table is displayed'##
 
 import pytest
 import time
@@ -14,7 +14,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class TestSYSTE17():
+class TestSYSTE18():
   def setup_method(self, method):
     self.driver = webdriver.Firefox()
     self.vars = {}
@@ -22,13 +22,13 @@ class TestSYSTE17():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_sYSTE17(self):
+  def test_sYSTE18(self):
     self.driver.get("http://localhost:3000/")
     self.driver.set_window_size(1290, 828)
     self.driver.find_element(By.CSS_SELECTOR, "#\\33 > span").click()
     self.driver.find_element(By.CSS_SELECTOR, ".insert-req").click()
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(1)").click()
-    self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(1)").send_keys("https://github.com/rubygems/bundler")
+    self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(1)").send_keys("https://github.com/angular/angular")
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(2)").click()
     self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(2)").send_keys("2019-01-01")
     self.driver.find_element(By.CSS_SELECTOR, ".btn-primary:nth-child(1)").click()
@@ -44,12 +44,12 @@ class TestSYSTE17():
 
         time.sleep(5)
 
-        self.driver.find_element(By.CSS_SELECTOR, ".metrics-button").click()
+        self.driver.find_element(By.CSS_SELECTOR, ".members-button").click()
 
         time.sleep(2)
 
-        metrics_present = self.driver.find_element(By.CSS_SELECTOR, ".metrics-table")
-        assert metrics_present.is_displayed(), "Metrics are displayed as expected"
+        members_present = self.driver.find_element(By.CSS_SELECTOR, ".members-table")
+        assert members_present.is_displayed(), "Members are displayed as expected"
     except TimeoutException:
         assert False, "The system didn't return correct request"
 

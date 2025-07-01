@@ -41,9 +41,9 @@ class TestSYSTE9():
             EC.visibility_of_element_located((By.CSS_SELECTOR, ".failed-answer .specific-error"))
         )
         if(error_element.text.strip().lower() == ("Invalid Repository: There must be at least 100 commits!").lower()):
-          assert True, "The system returned the right error message 'Invalid Repository: There must be at least 100 commits!'"
+          assert True, "The system returned the right error message 'Invalid Repository: There must be at least 2 members!'"
         else:
-          assert False, "The system didn't returned the right error message 'Invalid Repository: There must be at least 100 commits!'"
+          assert False, "The system didn't returned the right error message 'Invalid Repository: There must be at least 2 members!'"
     except TimeoutException:
         assert False, "The system returned the any error message"
 
