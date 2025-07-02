@@ -149,7 +149,7 @@ class CommunityInspectorTool(Tool):
         # === Caso 1: Avviare nuova analisi ===
         if "author" in data and "repository" in data and "end_date" in data:
             try:
-                response = requests.post("http://127.0.0.1:8000/analyze", json=data)
+                response = requests.post(f"{os.environ.get('TOAD_URL')}/analyze", json=data)
                 response.raise_for_status()
                 return response.json()
             except requests.RequestException as e:
@@ -160,7 +160,7 @@ class CommunityInspectorTool(Tool):
             job_id = data["job_id"]
             try:
                 # Recupera lo stato del job
-                status_response = requests.get(f"http://127.0.0.1:8000/status/{job_id}")
+                status_response = requests.get(f"{os.environ.get('TOAD_URL')}/status/{job_id}")
                 status_response.raise_for_status()
                 status_data = status_response.json()
 
@@ -169,7 +169,7 @@ class CommunityInspectorTool(Tool):
                     return status_data
 
                 # Altrimenti recupera il risultato completo
-                result_response = requests.get(f"http://127.0.0.1:8000/result/{job_id}")
+                result_response = requests.get(f"{os.environ.get('TOAD_URL')}/result/{job_id}")
                 result_response.raise_for_status()
                 return result_response.json()
 

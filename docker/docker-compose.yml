@@ -11,8 +11,11 @@ services:
       dockerfile: ../docker/Dockerfile
     ports:
       - "5005:5005"
+      - "8000:8000"
     networks:
       - shared-network
+    depends_on:
+      - redis
 
   frontend:
     container_name: guido_frontend
@@ -23,6 +26,13 @@ services:
       dockerfile: ../frontend/Dockerfile
     ports:
       - "3000:3000"
+    networks:
+      - shared-network
+  redis:
+    image: redis:7
+    container_name: redis_server
+    ports:
+      - "6379:6379"
     networks:
       - shared-network
 
