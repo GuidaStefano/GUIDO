@@ -78,7 +78,7 @@ ENV CLIENT_ID="f5fc77806e10b7e7d5f0"
 ENV SIMILARITY_MAX_DISTANCE=0.4
 ENV CSDETECTOR_URL_GETSMELLS='http://127.0.0.1:5001/getSmells'
 ENV GEODISPERSION_URL='http://127.0.0.1:5004/compute_std_dev'
-ENV TOAD_URL = 'http://127.0.0.1:8000'
+ENV TOAD_URL='http://127.0.0.1:8000'
 
 # Copia lo script di avvio nel container
 COPY ./run.sh /app/run.sh
