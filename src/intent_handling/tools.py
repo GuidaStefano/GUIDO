@@ -11,21 +11,42 @@ load_dotenv('src/.env')
 class CsDetectorTool(Tool):
     last_repo = ""
 
-    def execute_tool(self, data: List):
-        print("\n\n\nSono in execute tool", data)
-        print("\n\n\n")
-        # if we have 2 entities (repo and date), we execute the tool with date parameter
-        if data.__len__() >= 2:
-            req = requests.get(
-                os.environ.get('CSDETECTOR_URL_GETSMELLS') + '?repo=' + data[0] + '&pat=' + os.environ.get('PAT',
-                                                                                                           "") + "&start=" +
-                data[1])
-        else:
-            req = requests.get(
-                os.environ.get('CSDETECTOR_URL_GETSMELLS') + '?repo=' + data[0] + '&pat=' + os.environ.get('PAT',
-                                                                                                           ""))  # +'&user='+data[data.__len__()-1]+"&graphs=True"
+    def execute_tool(self, data: List): # data può essere List o Dict
+        print("\n\n\nSono in CsDetectorTool execute_tool, data:", data)
 
-        # req.raise_for_status()
+        repo_name = None
+        date_param = None
+
+        if isinstance(data, list):
+            if len(data) > 0:
+                repo_name = data[0]
+            if len(data) > 1:
+                date_param = data[1] # Formato atteso YYYY-MM-DD
+        elif isinstance(data, dict): # Gestisce il caso in cui data è un dict
+            repo_name = data.get("repo")
+            date_param = data.get("date") # Formato atteso YYYY-MM-DD o DD/MM/YYYY che IntentResolver dovrebbe aver normalizzato
+                                          # Tuttavia, IntentResolver non normalizza per GetSmells semplice.
+                                          # Se la data arriva qui come DD/MM/YYYY, CsDetector si aspetta YYYY-MM-DD.
+                                          # Per ora, assumiamo che se date_param è presente, sia già YYYY-MM-DD.
+
+        if not repo_name:
+            return ["Repository name not provided or in incorrect format.", "CSD_ERROR_REPO_MISSING", 890] # Codice errore per build_message
+
+        base_url = os.environ.get('CSDETECTOR_URL_GETSMELLS')
+        pat = os.environ.get('PAT', "")
+
+        if date_param:
+            # Assicurarsi che date_param sia nel formato YYYY-MM-DD
+            # Questa logica di conversione data è duplicata da IntentResolver,
+            # idealmente dovrebbe essere centralizzata o CsDetectorTool dovrebbe essere più tollerante.
+            # Per ora, se arriva una data, ci fidiamo del formato.
+            req_url = f"{base_url}?repo={repo_name}&pat={pat}&start={date_param}"
+        else:
+            req_url = f"{base_url}?repo={repo_name}&pat={pat}"
+
+        print(f"CsDetectorTool requesting URL: {req_url}\n\n\n")
+        req = requests.get(req_url)
+
         response_json = req.json()
 
         if req.status_code == 890:
