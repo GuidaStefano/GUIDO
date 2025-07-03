@@ -84,7 +84,7 @@ const RequestDetail = () => {
             <span>Metrics</span>
           </div>
           <div className="voceMenu floating-back smells-button" id="6" onClick={() => {setShowSmells(!showSmells);setShowMetrics(false); setShowMembers(false);}}>
-            <span>Smells</span>
+            <span>Pattern</span>
           </div>
         </div>
         <CommunityGraph graphData={graphData} />
